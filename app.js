@@ -6,11 +6,20 @@ import {
   verifyKeyMiddleware,
 } from 'discord-interactions';
 import { getRandomEmoji } from './utils.js';
+import mysql from 'mysql2'
+import mysqlcredentials from "./mysqlcredentials.json" assert {type:"json"}
 
 // Create an express app
 const app = express();
 // Get port, or default to 3000
 const PORT = process.env.PORT || 3000;
+
+// Create a connection to a MySQL Database based on the credentials found in mysqlcredentials.json
+const CONNECTION = mysql.createConnection( mysqlcredentials );
+CONNECTION.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
 
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
